@@ -108,3 +108,18 @@ def mfcf_control():
            'threshold': 0.01,
            'drop_sep': True}
     return ctl
+
+def logo(C, cliques, separators):
+
+    J = np.zeros(C.shape)
+    
+    for clq in cliques:
+        clqt = tuple(clq)
+        J[np.ix_(clqt, clqt)] += np.linalg.inv(C[np.ix_(clqt, clqt)])
+        
+    for sep in separators:
+        sept = tuple(sep)
+        J[np.ix_(sept, sept)] -= np.linalg.inv(C[np.ix_(sept, sept)])
+        
+    return J
+    
